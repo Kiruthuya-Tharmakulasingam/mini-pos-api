@@ -26,7 +26,10 @@ export const createCustomer = async (req, res) => {
   try {
     const newCustomer = new Customer(req.body);
     const savedCustomer = await newCustomer.save();
-    res.status(201).json(savedCustomer);
+    res.status(200).json({
+      message: "Customer created successfully",
+      customer: savedCustomer,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -42,7 +45,10 @@ export const updateCustomer = async (req, res) => {
     );
     if (!updatedCustomer)
       return res.status(404).json({ error: "Customer not found" });
-    res.status(200).json(updatedCustomer);
+    res.status(200).json({
+      message: "Customer updated successfully",
+      customer: updatedCustomer,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -54,7 +60,12 @@ export const deleteCustomer = async (req, res) => {
     const deletedCustomer = await Customer.findByIdAndDelete(req.params.id);
     if (!deletedCustomer)
       return res.status(404).json({ error: "Customer not found" });
-    res.status(200).json({ message: "Customer deleted successfully" });
+    res
+      .status(200)
+      .json({
+        message: "Customer deleted successfully",
+        customer: deletedCustomer,
+      });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
