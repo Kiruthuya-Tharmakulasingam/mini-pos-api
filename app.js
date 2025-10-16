@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import customerRoutes from "./routes/customerRoutes.js";
 
 dotenv.config();
 
@@ -21,6 +22,9 @@ const connectDB = async () => {
   }
 };
 connectDB();
+
+//Use Routes
+app.use("/api/customers", customerRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
