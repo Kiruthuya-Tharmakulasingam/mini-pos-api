@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
-import mongoose from "mongoose";
+import connectDB from "./config/db.js";
 import customerRoutes from "./routes/customerRoutes.js";
 
 dotenv.config();
@@ -11,18 +11,7 @@ const PORT = process.env.PORT;
 // Middleware to parse JSON
 app.use(express.json());
 
-// db connection
-const connectDB = async () => {
-  try {
-    await mongoose
-      .connect(process.env.MONGO_URI)
-      .then(() => console.log("DB Connected Successfully!"));
-  } catch (error) {
-    console.error("DB Connection Error:", error.message);
-  }
-};
 connectDB();
-
 //Use Routes
 app.use("/api/customers", customerRoutes);
 
