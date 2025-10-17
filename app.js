@@ -14,6 +14,10 @@ const PORT = process.env.PORT;
 app.use(express.json());
 
 connectDB();
+
+app.get("/", (req, res) => {
+  res.send("Welcome to Mini Pos Api!");
+});
 //Use Routes
 app.use("/api/customers", customerRoutes);
 app.use("/api/items", itemRoutes);
