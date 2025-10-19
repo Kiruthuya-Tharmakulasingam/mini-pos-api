@@ -1,4 +1,5 @@
 import Customer from "../models/Customer.js";
+import { paginate } from "../utils/paginate.js";
 
 // GET all customers
 export const getAllCustomers = async (req, res) => {
@@ -68,5 +69,18 @@ export const deleteCustomer = async (req, res) => {
       });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+// Pagination
+export const getCustomers = async (req, res) => {
+  try {
+    const { q = "", page = 1, limit = 10 } = req.query;
+    const query = q ? { name: { $regex: q, $options: "i" } } : {};
+
+    const result = await paginate(Customer, query, { page, limit });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
