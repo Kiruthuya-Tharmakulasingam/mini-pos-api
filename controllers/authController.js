@@ -5,6 +5,45 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Get all users
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users", error: error.message });
+  }
+};
+
+// Get user by ID
+export const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user", error: error.message });
+  }
+};
+
+// (Optional) Create new user
+export const createUser = async (req, res) => {
+  try {
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ message: "Request body is empty" });
+    }
+
+    const { username, email, password, role } = req.body;
+    const newUser = new User({ username, email, password, role });
+    await newUser.save();
+
+    res.status(201).json({ message: "User created successfully", user: newUser });
+  } catch (error) {
+    res.status(400).json({ message: "Error creating user", error: error.message });
+  }
+};
+
+
 // Register a new user
 export const registerUser = async (req, res) => {
   try {
