@@ -1,5 +1,5 @@
 import Customer from "../models/Customer.js";
-import { paginate } from "../utils/paginate.js";
+// import { paginate } from "../utils/paginate.js";
 
 // GET all customers
 export const getAllCustomers = async (req, res) => {
