@@ -1,3 +1,4 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import connectDB from "./config/db.js";
@@ -13,6 +14,7 @@ const PORT = process.env.PORT;
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(cors());
 
 connectDB();
 
@@ -23,7 +25,7 @@ app.get("/", (req, res) => {
 app.use("/api/customers", customerRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/sales", saleRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/users", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
